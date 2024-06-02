@@ -113,8 +113,8 @@ data = dict(
     test_dataloader=dict(samples_per_gpu=32),
     train=dict(
         type='TopDownCocoDataset',
-        ann_file='data/coco/annotations/person_keypoints_train2017.json',
-        img_prefix='data/coco//train2017/',
+        ann_file='/mmpose/data/coco/annotations/person_keypoints_train2017.json',
+        img_prefix='/mmpose/data/coco//train2017/',
         data_cfg=data_cfg,
         pipeline=train_pipeline,
         dataset_info={{_base_.dataset_info}}),
