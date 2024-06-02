@@ -24,10 +24,12 @@ optimizer_config = dict(grad_clip=dict(max_norm=1., norm_type=2))
 lr_config = dict(
     policy='step',
     warmup='linear',
-    warmup_iters=500,
+    # warmup_iters=500,
+    warmup_iters=100,
     warmup_ratio=0.001,
     step=[170, 200])
-total_epochs = 210
+# total_epochs = 210
+total_epochs = 3
 target_type = 'GaussianHeatmap'
 channel_cfg = dict(
     num_output_channels=17,
@@ -51,7 +53,7 @@ model = dict(
         depth=12,
         num_heads=12,
         ratio=1,
-        use_checkpoint=False,
+        use_checkpoint=True,
         mlp_ratio=4,
         qkv_bias=True,
         drop_path_rate=0.1,
@@ -87,7 +89,7 @@ data_cfg = dict(
     vis_thr=0.2,
     use_gt_bbox=False,
     det_bbox_thr=0.0,
-    bbox_file='data/coco/person_detection_results/'
+    bbox_file='/mmpose/data/coco/person_detection_results/'
     'COCO_val2017_detections_AP_H_56_person.json',
 )
 
@@ -139,12 +141,15 @@ val_pipeline = [
 
 test_pipeline = val_pipeline
 
-data_root = 'data/coco'
+data_root = '/mmpose/data/coco'
 data = dict(
-    samples_per_gpu=64,
+    # samples_per_gpu=64,
+    samples_per_gpu=32,
     workers_per_gpu=4,
-    val_dataloader=dict(samples_per_gpu=32),
-    test_dataloader=dict(samples_per_gpu=32),
+    # val_dataloader=dict(samples_per_gpu=32),
+    # test_dataloader=dict(samples_per_gpu=32),
+    val_dataloader=dict(samples_per_gpu=16),
+    test_dataloader=dict(samples_per_gpu=16),
     train=dict(
         type='TopDownCocoDataset',
         ann_file=f'{data_root}/annotations/person_keypoints_train2017.json',
